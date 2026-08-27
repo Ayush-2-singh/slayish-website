@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { PHOTOS, CATEGORIES, FEATURED_PHOTOS } from '@/data/photos'
 import type { Photo } from '@/data/photos'
-import Image from 'next/image'
+import Logo, { LogoMark } from '@/components/Logo'
 
 /* ══════════════════════════════════════════════════════════════════════════════
    SLAYISH — Handcrafted Gifts & Accessories
@@ -90,15 +90,15 @@ function Navbar() {
     }}>
       <div style={{ maxWidth: 1200, margin: '0 auto', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href="#" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: 'linear-gradient(135deg, #2d0e0e, #4a1a1a)', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', fontSize: 16, color: '#c9a87c', fontWeight: 800,
-            border: '1px solid #c9a87c33',
-          }}>🎁</div>
-          <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-            SLAYISH<span className="text-gradient-static" style={{ fontWeight: 400, fontSize: 14, marginLeft: 4 }}></span>
-          </span>
+          <Logo size={36} />
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '0.08em', lineHeight: 1.1 }}>
+              SLAYISH
+            </span>
+            <span style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.15em', fontWeight: 500, fontStyle: 'italic' }}>
+              Gifts and Accessories
+            </span>
+          </div>
         </a>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <a href="#products" style={{ fontSize: 14, color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }}>Products</a>
@@ -483,12 +483,7 @@ function Footer() {
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{
-            width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg, #2d0e0e, #4a1a1a)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#c9a87c', fontSize: 11, fontWeight: 800,
-            border: '1px solid #c9a87c33',
-          }}>🎁</div>
+          <LogoMark size={28} />
           <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Slayish</span>
         </div>
         <div style={{ display: 'flex', gap: 20 }}>
