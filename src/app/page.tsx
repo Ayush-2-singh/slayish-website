@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, type Variants } from 'framer-motion'
-import { PHOTOS, CATEGORIES, FEATURED_PHOTOS } from '@/data/photos'
+import { PHOTOS, FEATURED_PHOTOS } from '@/data/photos'
 import type { Photo } from '@/data/photos'
 import Logo, { LogoMark } from '@/components/Logo'
 
@@ -304,9 +304,7 @@ function Products() {
 }
 
 function Gallery() {
-  const [activeCategory, setActiveCategory] = useState('all')
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
-  const filtered = activeCategory === 'all' ? PHOTOS : PHOTOS.filter(p => p.category === activeCategory)
 
   return (
     <section id="gallery" style={{ padding: '80px 16px', maxWidth: 1200, margin: '0 auto' }}>
@@ -317,23 +315,8 @@ function Gallery() {
         </h2>
       </motion.div>
 
-      {/* Category Filter */}
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} style={{ display: 'flex', gap: 6, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 32, padding: '0 8px' }}>
-        {CATEGORIES.map(c => (
-          <motion.button key={c.key} variants={staggerItem} onClick={() => setActiveCategory(c.key)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{
-            padding: '7px 14px', borderRadius: 999, border: '1px solid var(--border)',
-            background: activeCategory === c.key ? 'linear-gradient(135deg, #3c1a0a, #5c2a12)' : 'transparent',
-            color: activeCategory === c.key ? '#f5ebe4' : 'var(--text-secondary)',
-            fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-          }}>
-            {c.icon} {c.label}
-          </motion.button>
-        ))}
-      </motion.div>
-
-      {/* Photo Grid */}
+      {/* All photos grid — no category filter */}
       <motion.div
-        layout
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
@@ -341,35 +324,17 @@ function Gallery() {
         className="insta-grid"
         style={{ borderRadius: 'var(--radius)', overflow: 'hidden' }}
       >
-        <AnimatePresence mode="popLayout">
-          {filtered.map((p) => (
-            <motion.div
-              key={p.src}
-              layout
-              variants={staggerItem}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => setSelectedPhoto(p)}
-              style={{ aspectRatio: '1', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
-            >
-              <motion.img src={p.src} alt={p.alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} whileHover={{ scale: 1.1 }} transition={{ duration: 0.4 }} loading="lazy" />
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                style={{
-                  position: 'absolute', bottom: 0, left: 0, right: 0,
-                  padding: '40px 10px 8px',
-                  background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
-                  color: '#fff', fontSize: 11, fontWeight: 500,
-                }}
-              >
-                {p.alt}
-              </motion.div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+        {PHOTOS.map((p) => (
+          <motion.div
+            key={p.src}
+            variants={staggerItem}
+            onClick={() => setSelectedPhoto(p)}
+            whileHover={{ scale: 1.03, zIndex: 2 }}
+            style={{ aspectRatio: '1', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
+          >
+            <img src={p.src} alt={p.alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+          </motion.div>
+        ))}
       </motion.div>
 
       {/* Lightbox */}
