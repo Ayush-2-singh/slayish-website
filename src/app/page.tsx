@@ -136,9 +136,9 @@ function Navbar() {
           </div>
         </a>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <a href="#products" className="desktop-nav-link">Products</a>
-          <a href="#gallery" className="desktop-nav-link">Gallery</a>
-          <a href="#reviews" className="desktop-nav-link">Reviews</a>
+          <a href="#products" style={{ fontSize: 13, color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} className="desktop-nav-link">Products</a>
+          <a href="#gallery" style={{ fontSize: 13, color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} className="desktop-nav-link">Gallery</a>
+          <a href="#reviews" style={{ fontSize: 13, color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} className="desktop-nav-link">Reviews</a>
           <motion.a href="#contact" className="btn-glow btn-glow-primary" style={{ padding: '8px 20px', fontSize: 13 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Order Now</motion.a>
           <ThemeToggle />
         </div>
@@ -566,8 +566,7 @@ export default function HomePage() {
       {/* Desktop nav link styles */}
       <style jsx>{`
         .desktop-nav-link {
-          font-size: 13px; color: var(--text-secondary); text-decoration: none;
-          font-weight: 500; transition: color 0.2s; display: none;
+          display: none;
         }
         @media (min-width: 768px) {
           .desktop-nav-link { display: block; }
