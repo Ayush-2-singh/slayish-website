@@ -3,46 +3,53 @@
 @tailwind utilities;
 
 :root {
-  --bg: #fafafa;
+  --bg: #faf8f6;
   --bg-card: #ffffff;
-  --text-primary: #171717;
-  --text-secondary: #525252;
-  --text-muted: #a3a3a3;
-  --border: #e5e5e5;
-  --border-light: #f0f0f0;
-  --accent: #c084fc;
-  --accent-dark: #a855f7;
-  --accent-light: #f3e8ff;
-  --glow: rgba(192, 132, 252, 0.15);
-  --gradient-1: linear-gradient(135deg, #c084fc 0%, #f472b6 50%, #fb923c 100%);
-  --gradient-2: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  --gradient-hero: linear-gradient(180deg, #fafafa 0%, #f3e8ff 50%, #fafafa 100%);
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
-  --shadow-glow: 0 0 60px rgba(168,85,247,0.12);
+  --text-primary: #1a0a0a;
+  --text-secondary: #5a3a3a;
+  --text-muted: #9a7a7a;
+  --border: #e8ddd5;
+  --border-light: #f0e8e0;
+  --accent: #c9a87c;
+  --accent-dark: #b8924f;
+  --accent-light: #f5ede4;
+  --glow: rgba(201, 168, 124, 0.15);
+  --maroon: #4a1a1a;
+  --maroon-deep: #2d0e0e;
+  --gold: #c9a87c;
+  --gold-light: #d4b88a;
+  --gold-dark: #a88a5c;
+  --gradient-1: linear-gradient(135deg, #c9a87c 0%, #d4a06a 50%, #e8c48a 100%);
+  --gradient-2: linear-gradient(135deg, #b8924f 0%, #c9a87c 100%);
+  --gradient-hero: linear-gradient(180deg, #faf8f6 0%, #f5ede4 50%, #faf8f6 100%);
+  --shadow-sm: 0 1px 2px rgba(45,14,14,0.04);
+  --shadow-md: 0 4px 12px rgba(45,14,14,0.06);
+  --shadow-lg: 0 12px 40px rgba(45,14,14,0.08);
+  --shadow-glow: 0 0 60px rgba(201,168,124,0.12);
   --radius: 16px;
   --radius-sm: 10px;
   --radius-lg: 24px;
 }
 
 [data-theme="dark"] {
-  --bg: #0a0a0a;
-  --bg-card: #141414;
-  --text-primary: #fafafa;
-  --text-secondary: #a3a3a3;
-  --text-muted: #525252;
-  --border: #262626;
-  --border-light: #1a1a1a;
-  --accent: #c084fc;
-  --accent-dark: #a855f7;
-  --accent-light: #1a0a2e;
-  --glow: rgba(192, 132, 252, 0.08);
+  --bg: #0f0505;
+  --bg-card: #1a0a0a;
+  --text-primary: #f5ede4;
+  --text-secondary: #c9a87c;
+  --text-muted: #7a5a4a;
+  --border: #2d1515;
+  --border-light: #1a0a0a;
+  --accent: #c9a87c;
+  --accent-dark: #d4b88a;
+  --accent-light: #1a0f05;
+  --glow: rgba(201, 168, 124, 0.06);
+  --maroon: #2d0e0e;
+  --maroon-deep: #1a0505;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
   --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
-  --shadow-glow: 0 0 60px rgba(168,85,247,0.06);
-  --gradient-hero: linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a0a 100%);
+  --shadow-glow: 0 0 60px rgba(201,168,124,0.04);
+  --gradient-hero: linear-gradient(180deg, #0f0505 0%, #1a0a0a 50%, #0f0505 100%);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -77,11 +84,6 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -113,10 +115,6 @@ body {
   opacity: 0;
 }
 
-.animate-slide-down {
-  animation: slideDown 0.4s ease forwards;
-}
-
 /* Stagger children */
 .stagger > * { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
 .stagger > *:nth-child(1) { animation-delay: 0.05s; }
@@ -139,7 +137,7 @@ body {
 
 .glass:hover {
   box-shadow: var(--shadow-md);
-  border-color: var(--border);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -180,13 +178,13 @@ body {
 
 .btn-glow-primary {
   background: var(--gradient-2);
-  color: #fff;
-  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+  color: #0f0505;
+  box-shadow: 0 4px 20px rgba(201, 168, 124, 0.3);
 }
 
 .btn-glow-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 30px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 6px 30px rgba(201, 168, 124, 0.4);
 }
 
 .btn-glow-secondary {
@@ -196,7 +194,7 @@ body {
 }
 
 .btn-glow-secondary:hover {
-  background: var(--bg-card);
+  background: var(--accent-light);
   border-color: var(--accent);
   color: var(--accent-dark);
 }

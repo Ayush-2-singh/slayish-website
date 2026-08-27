@@ -92,11 +92,12 @@ function Navbar() {
         <a href="#" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{
             width: 36, height: 36, borderRadius: 10,
-            background: 'var(--gradient-1)', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', fontSize: 18, color: '#fff', fontWeight: 800,
-          }}>S</div>
+            background: 'linear-gradient(135deg, #2d0e0e, #4a1a1a)', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', fontSize: 16, color: '#c9a87c', fontWeight: 800,
+            border: '1px solid #c9a87c33',
+          }}>🎁</div>
           <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-            Slay<span className="text-gradient-static">ish</span>
+            SLAYISH<span className="text-gradient-static" style={{ fontWeight: 400, fontSize: 14, marginLeft: 4 }}></span>
           </span>
         </a>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -118,10 +119,9 @@ function Hero() {
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
       background: 'var(--gradient-hero)', padding: '120px 24px 80px', textAlign: 'center',
       position: 'relative', overflow: 'hidden',
-    }}>
-      {/* Background orbs */}
-      <div style={{ position: 'absolute', top: '20%', left: '10%', width: 400, height: 400, borderRadius: '50%', background: 'var(--glow)', filter: 'blur(80px)', opacity: 0.5 }} />
-      <div style={{ position: 'absolute', bottom: '20%', right: '10%', width: 300, height: 300, borderRadius: '50%', background: 'rgba(244,114,182,0.08)', filter: 'blur(80px)', opacity: 0.5 }} />
+    }}>        {/* Background orbs */}
+      <div style={{ position: 'absolute', top: '20%', left: '10%', width: 400, height: 400, borderRadius: '50%', background: 'rgba(201,168,124,0.08)', filter: 'blur(80px)', opacity: 0.5 }} />
+      <div style={{ position: 'absolute', bottom: '20%', right: '10%', width: 300, height: 300, borderRadius: '50%', background: 'rgba(74,26,26,0.08)', filter: 'blur(80px)', opacity: 0.5 }} />
 
       <div style={{ maxWidth: 800, position: 'relative', zIndex: 1 }} className={visible ? 'animate-fade-up' : 'opacity-0'}>
         <div style={{
@@ -240,10 +240,9 @@ function Gallery() {
       {/* Category Filter */}
       <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 40 }}>
         {CATEGORIES.map(c => (
-          <button key={c.key} onClick={() => setActiveCategory(c.key)} style={{
-            padding: '8px 18px', borderRadius: 999, border: '1px solid var(--border)',
-            background: activeCategory === c.key ? 'var(--text-primary)' : 'transparent',
-            color: activeCategory === c.key ? 'var(--bg)' : 'var(--text-secondary)',
+          <button key={c.key} onClick={() => setActiveCategory(c.key)} style={{              padding: '8px 18px', borderRadius: 999, border: '1px solid var(--border)',
+            background: activeCategory === c.key ? 'linear-gradient(135deg, #2d0e0e, #4a1a1a)' : 'transparent',
+            color: activeCategory === c.key ? '#c9a87c' : 'var(--text-secondary)',
             fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
             transition: 'all 0.2s ease',
           }}>
@@ -332,8 +331,8 @@ function Process() {
             <div style={{
               width: 64, height: 64, borderRadius: '50%', display: 'flex', alignItems: 'center',
               justifyContent: 'center', margin: '0 auto 20px',
-              background: 'var(--gradient-1)', color: '#fff', fontSize: 20, fontWeight: 800,
-              fontFamily: 'var(--font-playfair), serif',
+              background: 'linear-gradient(135deg, #2d0e0e, #4a1a1a)', color: '#c9a87c', fontSize: 20, fontWeight: 800,
+              fontFamily: 'var(--font-playfair), serif', border: '2px solid #c9a87c33',
             }}>{s.num}</div>
             <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8, letterSpacing: '-0.01em' }}>{s.title}</h3>
             <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: 280, margin: '0 auto' }}>{s.desc}</p>
@@ -371,8 +370,9 @@ function Testimonials() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 36, height: 36, borderRadius: '50%',
-                background: 'var(--gradient-1)', display: 'flex', alignItems: 'center',
-                justifyContent: 'center', color: '#fff', fontSize: 14, fontWeight: 700,
+                background: 'linear-gradient(135deg, #2d0e0e, #4a1a1a)', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', color: '#c9a87c', fontSize: 14, fontWeight: 700,
+                border: '1px solid #c9a87c33',
               }}>{t.name[0]}</div>
               <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{t.name}</span>
             </div>
@@ -438,7 +438,7 @@ function CTA() {
         background: 'var(--bg-card)', position: 'relative', overflow: 'hidden',
       }}>
         {/* Glow */}
-        <div style={{ position: 'absolute', top: '-50%', left: '50%', transform: 'translateX(-50%)', width: 400, height: 400, borderRadius: '50%', background: 'var(--glow)', filter: 'blur(80px)' }} />
+        <div style={{ position: 'absolute', top: '-50%', left: '50%', transform: 'translateX(-50%)', width: 400, height: 400, borderRadius: '50%', background: 'rgba(201,168,124,0.1)', filter: 'blur(80px)' }} />
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, letterSpacing: '-0.03em', color: 'var(--text-primary)', marginBottom: 16 }}>
@@ -473,10 +473,11 @@ function Footer() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{
-            width: 28, height: 28, borderRadius: 8, background: 'var(--gradient-1)',
+            width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg, #2d0e0e, #4a1a1a)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#fff', fontSize: 13, fontWeight: 800,
-          }}>S</div>
+            color: '#c9a87c', fontSize: 11, fontWeight: 800,
+            border: '1px solid #c9a87c33',
+          }}>🎁</div>
           <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Slayish</span>
         </div>
         <div style={{ display: 'flex', gap: 20 }}>
