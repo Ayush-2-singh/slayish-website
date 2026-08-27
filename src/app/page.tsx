@@ -1,6 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { PHOTOS, CATEGORIES, FEATURED_PHOTOS } from '@/data/photos'
+import type { Photo } from '@/data/photos'
+import Image from 'next/image'
 
 /* ══════════════════════════════════════════════════════════════════════════════
    SLAYISH — Handcrafted Gifts & Accessories
@@ -23,12 +26,12 @@ function useInView(threshold = 0.15) {
 
 // ─── Data ─────────────────────────────────────────────────────────────────
 const PRODUCTS = [
-  { name: 'Gift Hampers', desc: 'Curated boxes with love, wrapped in aesthetics', icon: '🎁', gradient: 'from-purple-500/10 to-pink-500/10' },
-  { name: 'Resin Art', desc: 'Custom resin pieces — coasters, frames, keychains', icon: '🎨', gradient: 'from-pink-500/10 to-orange-500/10' },
-  { name: 'Bouquets', desc: 'Hand-tied bouquets for every occasion', icon: '💐', gradient: 'from-orange-500/10 to-yellow-500/10' },
-  { name: 'Love Letters', desc: 'Handwritten letters that speak from the heart', icon: '💌', gradient: 'from-red-500/10 to-pink-500/10' },
-  { name: 'Greeting Cards', desc: 'Minimal, aesthetic cards for every moment', icon: '✨', gradient: 'from-violet-500/10 to-purple-500/10' },
-  { name: 'Custom Orders', desc: 'Tell us your vision, we\'ll craft it', icon: '🤝', gradient: 'from-emerald-500/10 to-teal-500/10' },
+  { name: 'Gift Hampers', desc: 'Curated boxes with love, wrapped in aesthetics', icon: '🎁', photo: '/images/gift-hamper-rakhi-1.jpg' },
+  { name: 'Resin Art', desc: 'Custom resin pieces — earrings, coasters, keychains', icon: '🎨', photo: '/images/resin-earrings.jpg' },
+  { name: 'Bouquets', desc: 'Hand-tied bouquets — roses, snacks, money', icon: '💐', photo: '/images/bouquet-roses-red.jpg' },
+  { name: 'Love Letters', desc: 'Handwritten letters that speak from the heart', icon: '💌', photo: '/images/love-letter-bouquet.jpg' },
+  { name: 'Crochet', desc: 'Handknitted beanies, scarves & accessories', icon: '🧶', photo: '/images/crochet-beanie-pink.jpg' },
+  { name: 'Birthday Setups', desc: 'Complete birthday surprise packages', icon: '🎂', photo: '/images/birthday-setup-full.jpg' },
 ]
 
 const TESTIMONIALS = [
@@ -190,16 +193,27 @@ function Products() {
         display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16,
       }}>
         {PRODUCTS.map((p, i) => (
-          <div key={i} className="glass" style={{ padding: 28, cursor: 'default' }}>
-            <div style={{
-              width: 56, height: 56, borderRadius: 14, display: 'flex', alignItems: 'center',
-              justifyContent: 'center', fontSize: 28, marginBottom: 20,
-              background: `linear-gradient(135deg, var(--accent-light), transparent)`,
-            }}>
-              {p.icon}
+          <div key={i} className="glass" style={{ overflow: 'hidden', cursor: 'default' }}>
+            <div style={{ height: 200, overflow: 'hidden', position: 'relative' }}>
+              <img src={p.photo} alt={p.name} style={{
+                width: '100%', height: '100%', objectFit: 'cover',
+                transition: 'transform 0.5s ease',
+              }} loading="lazy"
+              onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.08)')}
+              onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+              />
+              <div style={{
+                position: 'absolute', top: 12, left: 12, width: 40, height: 40,
+                borderRadius: 10, display: 'flex', alignItems: 'center',
+                justifyContent: 'center', fontSize: 20,
+                background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(8px)',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              }}>{p.icon}</div>
             </div>
-            <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8, letterSpacing: '-0.01em' }}>{p.name}</h3>
-            <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6 }}>{p.desc}</p>
+            <div style={{ padding: 20 }}>
+              <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 6, letterSpacing: '-0.01em' }}>{p.name}</h3>
+              <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6 }}>{p.desc}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -209,56 +223,87 @@ function Products() {
 
 function Gallery() {
   const { ref, visible } = useInView(0.1)
-  // Instagram-style photo grid using placeholder images
-  const photos = [
-    { alt: 'Gift Hamper', color: '#c084fc' },
-    { alt: 'Resin Art', color: '#f472b6' },
-    { alt: 'Bouquet', color: '#fb923c' },
-    { alt: 'Love Letter', color: '#a78bfa' },
-    { alt: 'Greeting Card', color: '#f9a8d4' },
-    { alt: 'Custom Order', color: '#fbbf24' },
-    { alt: 'Resin Coaster', color: '#c084fc' },
-    { alt: 'Gift Box', color: '#f472b6' },
-    { alt: 'Card Set', color: '#fb923c' },
-  ]
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
+
+  const filtered = activeCategory === 'all' ? PHOTOS : PHOTOS.filter(p => p.category === activeCategory)
 
   return (
     <section id="gallery" ref={ref} style={{ padding: '100px 24px', maxWidth: 1200, margin: '0 auto' }}>
-      <div className={visible ? 'animate-fade-up' : 'opacity-0'} style={{ textAlign: 'center', marginBottom: 60 }}>
+      <div className={visible ? 'animate-fade-up' : 'opacity-0'} style={{ textAlign: 'center', marginBottom: 40 }}>
         <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--accent-dark)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Our Work</p>
         <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, letterSpacing: '-0.03em', color: 'var(--text-primary)' }}>
           Every piece tells a <span className="text-gradient-static">story</span>
         </h2>
       </div>
 
+      {/* Category Filter */}
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 40 }}>
+        {CATEGORIES.map(c => (
+          <button key={c.key} onClick={() => setActiveCategory(c.key)} style={{
+            padding: '8px 18px', borderRadius: 999, border: '1px solid var(--border)',
+            background: activeCategory === c.key ? 'var(--text-primary)' : 'transparent',
+            color: activeCategory === c.key ? 'var(--bg)' : 'var(--text-secondary)',
+            fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
+            transition: 'all 0.2s ease',
+          }}>
+            {c.icon} {c.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Photo Grid */}
       <div className="insta-grid" style={{ borderRadius: 'var(--radius)', overflow: 'hidden' }}>
-        {photos.map((p, i) => (
-          <div key={i} style={{
-            aspectRatio: '1', background: `linear-gradient(135deg, ${p.color}22, ${p.color}44)`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            position: 'relative', overflow: 'hidden', cursor: 'pointer',
+        {filtered.map((p, i) => (
+          <div key={p.src} onClick={() => setSelectedPhoto(p)} style={{
+            aspectRatio: '1', position: 'relative', overflow: 'hidden', cursor: 'pointer',
             transition: 'transform 0.3s ease',
           }}
           onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.03)')}
           onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
           >
-            <span style={{ fontSize: 48 }}>{PRODUCTS[i % PRODUCTS.length].icon}</span>
+            <img src={p.src} alt={p.alt} style={{
+              width: '100%', height: '100%', objectFit: 'cover',
+              transition: 'transform 0.5s ease',
+            }} loading="lazy" />
             <div style={{
-              position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 16px 12px',
-              background: 'linear-gradient(transparent, rgba(0,0,0,0.6))', color: '#fff',
-              fontSize: 13, fontWeight: 600, opacity: 0, transition: 'opacity 0.3s ease',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-            >
+              position: 'absolute', bottom: 0, left: 0, right: 0,
+              padding: '40px 12px 10px',
+              background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+              color: '#fff', fontSize: 12, fontWeight: 500,
+              opacity: 0, transition: 'opacity 0.3s ease',
+            }}>
               {p.alt}
             </div>
           </div>
         ))}
       </div>
 
+      {/* Lightbox */}
+      {selectedPhoto && (
+        <div onClick={() => setSelectedPhoto(null)} style={{
+          position: 'fixed', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.9)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: 20, cursor: 'zoom-out', animation: 'fadeIn 0.2s ease',
+        }}>
+          <img src={selectedPhoto.src} alt={selectedPhoto.alt} style={{
+            maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', borderRadius: 12,
+            boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+          }} />
+          <div style={{
+            position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)',
+            background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)',
+            padding: '10px 20px', borderRadius: 999, color: '#fff',
+            fontSize: 13, fontWeight: 500, textAlign: 'center', maxWidth: '80vw',
+          }}>
+            {selectedPhoto.alt}
+          </div>
+        </div>
+      )}
+
       <div style={{ textAlign: 'center', marginTop: 32 }}>
         <a href="https://www.instagram.com/slayish3/" target="_blank" rel="noopener noreferrer" className="btn-glow btn-glow-secondary">
-          📸 Follow on Instagram
+          📸 Follow on Instagram — @{PHOTOS.length}+ posts
         </a>
       </div>
     </section>
@@ -340,12 +385,7 @@ function Testimonials() {
 
 function InstagramFeed() {
   const { ref, visible } = useInView(0.1)
-  // Placeholder posts - in production, fetch from Instagram Graph API
-  const posts = [
-    { img: '🎁', caption: 'New gift hamper collection just dropped!', likes: '124', comments: '18' },
-    { img: '🎨', caption: 'Custom resin art — commission open!', likes: '98', comments: '12' },
-    { img: '💐', caption: 'Birthday bouquet for a special someone', likes: '156', comments: '24' },
-  ]
+  const latestPhotos = FEATURED_PHOTOS.slice(0, 6)
 
   return (
     <section ref={ref} style={{ padding: '100px 24px', maxWidth: 1200, margin: '0 auto' }}>
@@ -354,27 +394,35 @@ function InstagramFeed() {
         <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, letterSpacing: '-0.03em', color: 'var(--text-primary)' }}>
           Follow <span className="text-gradient-static">@slayish3</span>
         </h2>
-        <p style={{ fontSize: 15, color: 'var(--text-secondary)', marginTop: 12 }}>Latest posts from our Instagram</p>
+        <p style={{ fontSize: 15, color: 'var(--text-secondary)', marginTop: 12 }}>3,200+ followers who love handcrafted gifts</p>
       </div>
 
       <div className={`stagger ${visible ? '' : 'opacity-0'}`} style={{
         display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16,
       }}>
-        {posts.map((p, i) => (
+        {latestPhotos.map((p, i) => (
           <div key={i} className="glass" style={{ overflow: 'hidden' }}>
-            <div style={{
-              aspectRatio: '1', background: `linear-gradient(135deg, var(--accent-light), var(--bg-card))`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 64,
-            }}>{p.img}</div>
+            <div style={{ aspectRatio: '1', overflow: 'hidden' }}>
+              <img src={p.src} alt={p.alt} style={{
+                width: '100%', height: '100%', objectFit: 'cover',
+                transition: 'transform 0.5s ease',
+              }} loading="lazy"
+              onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.05)')}
+              onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+              />
+            </div>
             <div style={{ padding: 20 }}>
-              <p style={{ fontSize: 14, color: 'var(--text-primary)', lineHeight: 1.6, marginBottom: 12 }}>{p.caption}</p>
-              <div style={{ display: 'flex', gap: 16, fontSize: 13, color: 'var(--text-muted)' }}>
-                <span>❤️ {p.likes}</span>
-                <span>💬 {p.comments}</span>
-              </div>
+              <p style={{ fontSize: 14, color: 'var(--text-primary)', lineHeight: 1.6, marginBottom: 8 }}>{p.alt}</p>
+              <span style={{ fontSize: 12, color: 'var(--accent-dark)', fontWeight: 600 }}>{p.category}</span>
             </div>
           </div>
         ))}
+      </div>
+
+      <div style={{ textAlign: 'center', marginTop: 32 }}>
+        <a href="https://www.instagram.com/slayish3/" target="_blank" rel="noopener noreferrer" className="btn-glow btn-glow-primary">
+          📸 Follow @slayish3 on Instagram
+        </a>
       </div>
     </section>
   )
