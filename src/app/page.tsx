@@ -125,12 +125,23 @@ function Hero() {
 
       <div style={{ maxWidth: 800, position: 'relative', zIndex: 1 }} className={visible ? 'animate-fade-up' : 'opacity-0'}>
         <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 16px',
+          display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 20px',
           borderRadius: 999, border: '1px solid var(--border)', background: 'var(--bg-card)',
           fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500, marginBottom: 32,
+          animation: 'fadeIn 0.8s ease forwards', overflow: 'hidden', position: 'relative',
         }}>
-          <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
-          Pan India Shipping · DM to Order
+          <span style={{
+            background: 'var(--gradient-1)', backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text', animation: 'gradientShift 3s ease infinite',
+            fontWeight: 700, fontSize: 13,
+          }}>✨</span>
+          <span style={{
+            background: 'var(--gradient-1)', backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text', animation: 'gradientShift 3s ease infinite',
+            fontWeight: 600, fontSize: 13,
+          }}>Pan India Shipping · DM to Order</span>
         </div>
 
         <h1 style={{
